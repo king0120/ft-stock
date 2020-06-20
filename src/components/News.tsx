@@ -6,6 +6,7 @@ const News = () => {
       <h1>CARD 1</h1>
       <h1>CARD 2</h1>
       <h1>CARD 3</h1>
+      <h1>CARD 4</h1>
     </div>
   );
 };
