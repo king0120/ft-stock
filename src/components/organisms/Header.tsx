@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { Heading, InputGroup, InputLeftElement, Icon, Input, Flex, Box } from "@chakra-ui/core";
-import { StockSymbolContext } from 'src/App';
+import { ActiveCompany } from 'src/context/ActiveCompanyContext';
+
 
 const Header = () => {
-  const {setStockName} = useContext(StockSymbolContext);
+  const {setStockName} = useContext(ActiveCompany);
   return (
     <Box display="flex" bg="#aabbcc" w="100%" p={4} color="white">
       <Heading width="33%">FlashStock</Heading>

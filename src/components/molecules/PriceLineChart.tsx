@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {XYPlot, LineSeries, HorizontalGridLines, XAxis, YAxis, FlexibleXYPlot, LineMarkSeries, VerticalGridLines, Crosshair} from 'react-vis';
-import fetchStockCandles from 'src/services/fetchStockCandles';
-import { StockSymbolContext } from 'src/App';
+import React, { useState, useContext, useEffect } from 'react';
+import fetchStockCandles from '../../services/fetchStockCandles';
+import { FlexibleXYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries } from 'react-vis';
+import { ActiveCompany } from '../../context/ActiveCompanyContext';
 
-const PriceChart = () => {
+const PriceLineChart = () => {
   const [data, setData] = useState([])
-  const {stockName} = useContext(StockSymbolContext);
+  const {stockName} = useContext(ActiveCompany);
   useEffect(() => {
-    console.log("Fetching For", stockName)
     fetchStockCandles(stockName).then((rawPrices) => {
       const formatted = []
       for (let i = 0; i < rawPrices.c.length; i++) {
@@ -19,7 +18,6 @@ const PriceChart = () => {
       return formatted
     }).then(prices => setData(prices))
   }, [stockName])
-  console.log(data)
   return (
     <div className="App">
       <FlexibleXYPlot
@@ -38,4 +36,4 @@ const PriceChart = () => {
   );
 };
 
-export default PriceChart;
+export default PriceLineChart;

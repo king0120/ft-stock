@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNews } from 'src/hooks/useNews';
+import { useNews } from '../../hooks/useNews';
 import NewsCard from '../molecules/NewsCard';
 import { Flex } from '@chakra-ui/core';
 
