@@ -1,19 +1,28 @@
-import React from 'react';
-import { ThemeProvider, CSSReset, Popover, PopoverTrigger, Button, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody } from '@chakra-ui/core'
-import Header from './components/Header';
-import PriceChart from './components/PriceChart';
-import News from './components/News';
-import Favorites from './components/Favorites';
+import React, { useState } from 'react';
+import { ThemeProvider, CSSReset } from '@chakra-ui/core'
+import Header from './components/organisms/Header';
+import Favorites from './components/organisms/Favorites';
+import PriceChart from './components/organisms/PriceChart';
+import News from './components/organisms/News';
+import 'react-vis/dist/style.css';
+
+export const StockSymbolContext = React.createContext(
+  {stockName: '', setStockName: () => {}}
+)
 interface AppProps { }
 
 function App({ }: AppProps) {
+  const [stockName, setStockName] = useState('AAPL')
+  
   return (
     <ThemeProvider>
-      <CSSReset />
-      <Header />
-      <PriceChart/>
-      <News/>
-      <Favorites />
+      <StockSymbolContext.Provider value={{stockName, setStockName} as any}>
+        <CSSReset />
+        <Header />
+        <PriceChart/>
+        <News/>
+        <Favorites />
+      </StockSymbolContext.Provider>
     </ThemeProvider>
   );
 }
