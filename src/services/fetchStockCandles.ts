@@ -7,7 +7,7 @@ export default async function fetchStockCandles(symbol: string, ){
   }
   const {data} = await finnHubInstance.get(`/stock/candle`, {
     params: {
-      symbol: 'AAPL',
+      symbol: symbol,
       resolution: 'D',
       from: parseInt(sixMonthsAgo), 
       to: parseInt(today)
