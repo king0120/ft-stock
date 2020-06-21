@@ -8,27 +8,28 @@ interface PriceLineChartProps {
   height: number
 }
 
-const PriceLineChart: FC<PriceLineChartProps> = ({width, height}) => {
+const PriceLineChart: FC<PriceLineChartProps> = ({ width, height }) => {
   const [data, setData] = useState([])
-  const {stockName} = useContext(ActiveCompany);
+  const { stockCandles } = useContext(ActiveCompany);
   useEffect(() => {
-    fetchStockCandles(stockName).then((rawPrices) => {
-      const formatted = []
-      for (let i = 0; i < rawPrices.c.length; i++) {
-        formatted.push({
-          y: rawPrices.c[i],
-          x: rawPrices.t[i] * 1000
-        })
-      }
-      return formatted
-    }).then(prices => setData(prices))
-  }, [stockName])
+    if (!stockCandles.c) {return}
+
+    const formatted = []
+
+    for (let i = 0; i < stockCandles.c.length; i++) {
+      formatted.push({
+        y: stockCandles.c[i],
+        x: stockCandles.t[i] * 1000
+      })
+    }
+    setData(formatted)
+  }, [stockCandles])
   return (
     <div className="App">
       <FlexibleXYPlot
         xType="time"
-        margin={{left: 50}}
-        height={height * .9} 
+        margin={{ left: 50 }}
+        height={height * .9}
         width={width * .9}
       >
         <XAxis />

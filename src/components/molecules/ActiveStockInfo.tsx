@@ -1,15 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { Flex, Heading, Image, Text, Tag, TagLabel, TagIcon, Box } from '@chakra-ui/core';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
-import startWebSocket from 'src/services/priceWebSocket';
+import { useRealtimePrice } from 'src/services/priceWebSocket';
 
 const ActiveStockInfo = () => {
   const { stockName, companyInfo } = useContext(ActiveCompany);
-  console.log(companyInfo)
-  useEffect(() => {
-    startWebSocket(stockName)
-  }, [])
-  
+  const realTimePrices = useRealtimePrice(stockName)
+  console.log("REALTIME", stockName, realTimePrices)
   return (
     <Flex alignItems='center'>
       <Image
@@ -23,7 +20,9 @@ const ActiveStockInfo = () => {
         <Text>{companyInfo.ticker}</Text>
       </Flex>
       <Flex justifySelf='flex-end' alignSelf="flex-end">
-        <Box></Box>
+        <Box>
+          <p>Price: {realTimePrices[realTimePrices.length - 1]?.p}</p>
+        </Box>
         <Box>
           <Tag variantColor="green">
             <TagLabel>{companyInfo.country}</TagLabel>
