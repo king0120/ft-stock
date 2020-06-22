@@ -4,15 +4,12 @@ import { Box, Flex } from '@chakra-ui/core';
 const containerStyles = {
   width: ['100vw', '100vw', '100vw', '80vw'],
   margin: '0 auto',
-  display: 'flex'
-}
+  display: 'flex',
+};
 
-const Container: FC = ({children}) => {
+const Container: FC = ({ children }) => {
   return (
-    <Flex
-      direction="column"
-      {...containerStyles}
-    >
+    <Flex direction="column" {...containerStyles}>
       {children}
     </Flex>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ThemeProvider, CSSReset, Box, Flex } from '@chakra-ui/core'
+import { ThemeProvider, CSSReset, Box, Flex } from '@chakra-ui/core';
 import Header from './components/organisms/Header';
 import Favorites from './components/organisms/Favorites';
 import CompanyStockInfo from './components/organisms/CompanyStockInfo';
@@ -9,10 +9,9 @@ import { ActiveCompanyProvider } from './context/ActiveCompanyContext';
 import Container from './components/organisms/Container';
 import { FavoritesProvider } from './context/FavoritesContext';
 
-interface AppProps { }
+interface AppProps {}
 
-function App({ }: AppProps) {
-
+function App({}: AppProps) {
   return (
     <ThemeProvider>
       <FavoritesProvider>
@@ -21,11 +20,11 @@ function App({ }: AppProps) {
           <Header />
           <Container>
             <Flex width={'100%'}>
-              <CompanyStockInfo/>
+              <CompanyStockInfo />
               <Favorites />
             </Flex>
-            <Box width={"100%"}>
-              <News/>
+            <Box width={'100%'}>
+              <News />
             </Box>
           </Container>
         </ActiveCompanyProvider>

@@ -1,17 +1,22 @@
-import finnHubInstance from "./finnHubClient"
-import { today, sixHoursAgo } from "../utils/timeUtils"
+import finnHubInstance from './finnHubClient';
+import { today, TimeOptions } from '../utils/timeUtils';
 
-export default async function fetchStockCandles(symbol: string, ){
+export type AvailableTimes = keyof typeof TimeOptions;
+
+export default async function fetchStockCandles(
+  symbol: string,
+  availableTimes: AvailableTimes = 'oneDayAgo',
+) {
   if (!symbol) {
-    return {c: [], t: []}
+    return { c: [], t: [] };
   }
-  const {data} = await finnHubInstance.get(`/stock/candle`, {
+  const { data } = await finnHubInstance.get(`/stock/candle`, {
     params: {
       symbol: symbol,
-      resolution: '15',
-      from: Math.floor(sixHoursAgo()), 
-      to: Math.floor(today())
-    }
-  }) 
-  return data
+      resolution: TimeOptions[availableTimes].resolution,
+      from: Math.floor(TimeOptions[availableTimes].from()),
+      to: Math.floor(today()),
+    },
+  });
+  return data;
 }

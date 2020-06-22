@@ -1,9 +1,9 @@
-import finnHubClient from "./finnHubClient"
+import finnHubClient from './finnHubClient';
 
-export default async function fetchCompanyInfo(symbol: string, ){
+export default async function fetchCompanyInfo(symbol: string) {
   const res = await finnHubClient.get('/stock/profile2', {
-    params: {symbol}
-  })
+    params: { symbol },
+  });
 
   return res.data;
 }

@@ -1,29 +1,26 @@
-import React, { useState, FC, useEffect } from 'react'
-import fetchCompanyInfo from '../services/fetchCompanyInfo'
-import fetchStockCandles from '../services/fetchStockCandles';
-import type { RealTimePrice } from '../services/priceWebSocket';
+import React, { useState, FC, useEffect } from 'react';
+import fetchCompanyInfo from '../services/fetchCompanyInfo';
 
 export const ActiveCompany = React.createContext({
   stockName: '',
-  setStockName: (s: string) => { },
+  setStockName: (s: string) => {},
   companyInfo: {} as FinnhubCompanyProfile,
-  stockCandles: {} as any,
-  realTimePrices: [] as RealTimePrice[]
 });
 
 export const ActiveCompanyProvider: FC = ({ children }) => {
-  const [stockName, setStockName] = useState('AAPL')
-  const [companyInfo, setCompanyInfo] = useState<FinnhubCompanyProfile>({} as FinnhubCompanyProfile)
-  const [stockCandles, setStockCandles] = useState<FinnhubCompanyProfile>({} as FinnhubCompanyProfile)
-  
-  
+  const [stockName, setStockName] = useState('AAPL');
+  const [companyInfo, setCompanyInfo] = useState<FinnhubCompanyProfile>(
+    {} as FinnhubCompanyProfile,
+  );
+
   useEffect(() => {
-    fetchCompanyInfo(stockName).then(setCompanyInfo)
-    fetchStockCandles(stockName).then(setStockCandles)  
-  }, [stockName])
+    fetchCompanyInfo(stockName).then(setCompanyInfo);
+  }, [stockName]);
   return (
-    <ActiveCompany.Provider value={{ stockName, setStockName, companyInfo, stockCandles } as any}>
+    <ActiveCompany.Provider
+      value={{ stockName, setStockName, companyInfo } as any}
+    >
       {children}
     </ActiveCompany.Provider>
-  )
-}
+  );
+};

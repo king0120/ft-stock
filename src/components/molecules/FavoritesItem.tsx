@@ -7,15 +7,15 @@ interface FavoritesItemProps {
   stockName: string;
 }
 
-const FavoritesItem: FC<FavoritesItemProps> = ({stockName}) => {
-  const {setStockName} = useContext(ActiveCompany)
-  const [currentPrice, setCurrentPrice] = useState(0)
+const FavoritesItem: FC<FavoritesItemProps> = ({ stockName }) => {
+  const { setStockName } = useContext(ActiveCompany);
+  const [currentPrice, setCurrentPrice] = useState(0);
   useEffect(() => {
     fetchStockQuote(stockName).then((data) => {
-      setCurrentPrice(data.c)
-    })
-  }, [stockName])
-  
+      setCurrentPrice(data.c);
+    });
+  }, [stockName]);
+
   return (
     <ListItem>
       <a onClick={() => setStockName(stockName)}>{stockName}</a>
