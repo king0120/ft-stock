@@ -1,16 +1,26 @@
-import React from 'react';
-import { Tabs, TabList, Tab } from '@chakra-ui/core';
+import React, { FC } from 'react';
+import { Tabs, TabList, Tab, Tooltip } from '@chakra-ui/core';
+import { TimeOptions } from '../../utils/timeUtils';
 
-const TimeFrameTabs = () => {
+interface TimeFrameTabsProps {
+  setSelectedTime: (s:string) => {}
+}
+
+const TimeFrameTabs: FC<TimeFrameTabsProps> = ({setSelectedTime}) => {
   return (
     <Tabs size="sm">
       <TabList>
-        <Tab>1d</Tab>
-        <Tab>1d</Tab>
-        <Tab>5d</Tab>
-        <Tab>1mo</Tab>
-        <Tab>3mo</Tab>
-        <Tab>6mo</Tab>
+        {Object.entries(TimeOptions).map(([key, value]) => (
+          <Tab key={key} onClick={() => {setSelectedTime(key)}}>
+            <Tooltip 
+              aria-label={value.name} 
+              label={value.name} 
+              placement="top"
+            >
+              {value.abbr}
+            </Tooltip>
+          </Tab>
+        ))}
       </TabList>
     </Tabs>
   );

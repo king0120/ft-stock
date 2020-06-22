@@ -7,7 +7,7 @@ import { useContainerSize } from '../../hooks/useContainerSize';
 const containerStyles = {
   width: ['100vw', '60vw'],
   height: '50vh',
-  marginBottom: '100px',
+  marginBottom: '45px',
 };
 
 const CompanyStockInfo = () => {

@@ -1,7 +1,5 @@
 import finnHubInstance from './finnHubClient';
-import { today, TimeOptions } from '../utils/timeUtils';
-
-export type AvailableTimes = keyof typeof TimeOptions;
+import { today, TimeOptions, AvailableTimes } from '../utils/timeUtils';
 
 export default async function fetchStockCandles(
   symbol: string,

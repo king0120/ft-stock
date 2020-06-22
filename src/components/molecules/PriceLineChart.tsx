@@ -11,7 +11,8 @@ import { ActiveCompany } from '../../context/ActiveCompanyContext';
 import { useRealtimePrice } from '../../services/priceWebSocket';
 import { Tabs, TabList, Tab } from '@chakra-ui/core';
 import TimeFrameTabs from './TimeFrameTabs';
-import fetchStockCandles from 'src/services/fetchStockCandles';
+import fetchStockCandles from '../../services/fetchStockCandles';
+import { AvailableTimes } from 'src/utils/timeUtils';
 
 interface PriceLineChartProps {
   width: number;
@@ -25,11 +26,12 @@ interface LineChartPoint {
 const PriceLineChart: FC<PriceLineChartProps> = React.memo(
   ({ width, height }) => {
     const [stockCandles, setStockCandles] = useState<LineChartPoint[]>([]);
+    const [selectedTime, setSelectedTime] = useState<AvailableTimes>('sixHoursAgo');
     const { stockName } = useContext(ActiveCompany);
     const realtimePrice = useRealtimePrice(stockName);
 
     useEffect(() => {
-      fetchStockCandles(stockName, 'oneDayAgo').then((data) => {
+      fetchStockCandles(stockName, selectedTime).then((data) => {
         if (!data.c) {
           return;
         }
@@ -44,7 +46,7 @@ const PriceLineChart: FC<PriceLineChartProps> = React.memo(
         }
         setStockCandles(formatted);
       });
-    }, [stockName]);
+    }, [stockName, selectedTime]);
 
     useEffect(() => {
       if (realtimePrice.length) {
@@ -60,7 +62,7 @@ const PriceLineChart: FC<PriceLineChartProps> = React.memo(
 
     return (
       <div className="App">
-        <TimeFrameTabs />
+        <TimeFrameTabs setSelectedTime={setSelectedTime}/>
         <FlexibleXYPlot
           xType="time"
           margin={{ left: 50 }}
