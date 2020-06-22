@@ -5,10 +5,11 @@ import { Box } from '@chakra-ui/core';
 import { useContainerSize } from '../../hooks/useContainerSize';
 
 const containerStyles = {
-  border: '1px solid red',
   width: ['100vw', '60vw'],
-  height: '50vh'
+  height: '50vh',
+  marginBottom: '100px'
 }
+
 const CompanyStockInfo = () => {
   const containerElement = useRef(null)
   const {width, height} = useContainerSize(containerElement)

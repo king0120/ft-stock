@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Flex, Heading, Image, Text, Tag, TagLabel, TagIcon, Box } from '@chakra-ui/core';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
 import { useRealtimePrice } from 'src/services/priceWebSocket';
+import { AiOutlineStar } from "react-icons/ai"
 
 const ActiveStockInfo = () => {
   const { stockName, companyInfo } = useContext(ActiveCompany);
@@ -20,6 +21,7 @@ const ActiveStockInfo = () => {
         <Text>{companyInfo.ticker}</Text>
       </Flex>
       <Flex justifySelf='flex-end' alignSelf="flex-end">
+        <Box as={AiOutlineStar} />
         <Box>
           <p>Price: {realTimePrices[realTimePrices.length - 1]?.p}</p>
         </Box>

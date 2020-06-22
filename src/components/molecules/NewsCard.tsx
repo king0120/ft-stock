@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Badge, Image } from '@chakra-ui/core';
+import { Box, Badge, Image, Tooltip } from '@chakra-ui/core';
 import {formatDistance} from 'date-fns'
 
 interface NewsCardProps {
@@ -17,9 +17,10 @@ const NewsCard = (props: NewsCardProps) => {
     new Date(props.datetime * 1000),
     new Date()
   )
+  console.log(props)
   return (
-    <Box maxW="200px" borderWidth="1px" rounded="lg" overflow="hidden">
-      <Image src={props.imageUrl} alt={props.imageAlt} />
+    <Box maxW="200px" margin="10px" borderWidth="1px" rounded="lg" overflow="hidden" as="a" href={props.url}>
+      <Image maxH="130px" margin="0 auto" src={props.imageUrl} alt={props.imageAlt} />
 
       <Box p="6">
         <Box d="flex" alignItems="baseline">
@@ -34,11 +35,9 @@ const NewsCard = (props: NewsCardProps) => {
           lineHeight="tight"
           isTruncated
         >
-          {props.title}
-        </Box>
-
-        <Box>
-          {props.headline}
+          <Tooltip aria-label="headline-tooltip" label={props.headline} placement="auto-start">
+            {props.headline}
+          </Tooltip>
         </Box>
         <Box
             color="gray.500"

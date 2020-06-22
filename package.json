@@ -19,6 +19,7 @@
     "react": "^16.13.0",
     "react-autosuggest": "^10.0.2",
     "react-dom": "^16.13.0",
+    "react-icons": "^3.10.0",
     "react-vis": "^1.11.7"
   },
   "devDependencies": {
@@ -30,7 +31,6 @@
     "@types/react": "^16.9.35",
     "@types/react-autosuggest": "^9.3.14",
     "@types/react-dom": "^16.9.8",
-    "cypress": "^4.8.0",
     "jest": "^25.4.0",
     "prettier": "^2.0.0",
     "snowpack": "^2.5.0",

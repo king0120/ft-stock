@@ -1,5 +1,5 @@
 import finnHubInstance from "./finnHubClient"
-import { sixMonthsAgo, today } from "../utils/timeUtils"
+import { sixMonthsAgo, today, oneDayAgo, sixHoursAgo } from "../utils/timeUtils"
 
 export default async function fetchStockCandles(symbol: string, ){
   if (!symbol) {
@@ -8,8 +8,8 @@ export default async function fetchStockCandles(symbol: string, ){
   const {data} = await finnHubInstance.get(`/stock/candle`, {
     params: {
       symbol: symbol,
-      resolution: 'D',
-      from: parseInt(sixMonthsAgo), 
+      resolution: '15',
+      from: parseInt(sixHoursAgo), 
       to: parseInt(today)
     }
   }) 
