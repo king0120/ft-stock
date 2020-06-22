@@ -1,7 +1,6 @@
-import React, { useEffect, useContext } from 'react';
-import { List, ListItem, Heading } from '@chakra-ui/core';
+import React from 'react';
+import { List, Heading } from '@chakra-ui/core';
 import useFavoritesList from '../../hooks/useFavoritesList';
-import { ActiveCompany } from '../../context/ActiveCompanyContext';
 import FavoritesItem from '../molecules/FavoritesItem';
 
 const Favorites = () => {

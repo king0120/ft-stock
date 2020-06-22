@@ -28,7 +28,6 @@ function App({ }: AppProps) {
               <News/>
             </Box>
           </Container>
-          <Favorites />
         </ActiveCompanyProvider>
       </FavoritesProvider>
     </ThemeProvider>

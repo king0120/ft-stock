@@ -1,13 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Flex, Heading, Image, Text, Tag, TagLabel, TagIcon, Box } from '@chakra-ui/core';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
 import { useRealtimePrice } from '../../services/priceWebSocket';
 import FavoriteIcon from '../atoms/FavoriteIcon';
+import fetchStockQuote from 'src/services/fetchStockQuote';
 
 const ActiveStockInfo = () => {
   const { stockName, companyInfo } = useContext(ActiveCompany);
+  const [price, setPrice] = useState(0)
   const realTimePrices = useRealtimePrice(stockName)
-  const price = realTimePrices[realTimePrices.length - 1]?.p.toFixed(2)
+  useEffect(() => {
+    fetchStockQuote(stockName).then((data) => setPrice(data.c))
+  }, [stockName])
+  useEffect(() => {
+    setPrice(realTimePrices[realTimePrices.length - 1]?.p.toFixed(2))
+  }, [realTimePrices])
   return (
     <Flex alignItems='center' justifyContent="space-between">
       <Flex>

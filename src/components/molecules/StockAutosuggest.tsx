@@ -3,7 +3,6 @@ import { ActiveCompany } from '../../context/ActiveCompanyContext';
 import { Input, InputGroup, InputLeftElement, Icon, Box, Flex } from '@chakra-ui/core';
 import Autosuggest, { RenderSuggestionsContainer, RenderSuggestion } from 'react-autosuggest';
 import fetchStockSymbols from '../../services/fetchStockSymbols';
-import debounce from 'debounce';
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = (value: string, allSuggestions) => {
