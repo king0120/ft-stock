@@ -7,7 +7,6 @@ import debounce from 'debounce';
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = (value: string, allSuggestions) => {
-  console.log("VALUE", value)
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
   const allFiltered = inputLength === 0 ? [] : allSuggestions.filter(company =>

@@ -1,7 +1,6 @@
 import React, { useState, FC, useEffect } from 'react'
 import fetchCompanyInfo from '../services/fetchCompanyInfo'
 import fetchStockCandles from '../services/fetchStockCandles';
-import { useRealtimePrice } from '../services/priceWebSocket';
 import type { RealTimePrice } from '../services/priceWebSocket';
 
 export const ActiveCompany = React.createContext({

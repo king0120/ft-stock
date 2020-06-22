@@ -17,7 +17,6 @@ const NewsCard = (props: NewsCardProps) => {
     new Date(props.datetime * 1000),
     new Date()
   )
-  console.log(props)
   return (
     <Box maxW="200px" margin="10px" borderWidth="1px" rounded="lg" overflow="hidden" as="a" href={props.url}>
       <Image maxH="130px" margin="0 auto" src={props.imageUrl} alt={props.imageAlt} />

@@ -1,5 +1,4 @@
 import { subDays, subMonths, subMinutes } from "date-fns";
-import { data } from "cypress/types/jquery";
 
 export const today = () => new Date().getTime()/1000
 export const sixHoursAgo = () => subMinutes(new Date(), 360).getTime()/1000

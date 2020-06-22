@@ -7,6 +7,7 @@ import News from './components/organisms/News';
 import 'react-vis/dist/style.css';
 import { ActiveCompanyProvider } from './context/ActiveCompanyContext';
 import Container from './components/organisms/Container';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 interface AppProps { }
 
@@ -14,19 +15,22 @@ function App({ }: AppProps) {
 
   return (
     <ThemeProvider>
-      <ActiveCompanyProvider>
-        <CSSReset />
-        <Header />
-        <Container>
-          <Flex width={'100%'}>
-            <CompanyStockInfo/>
-            <Favorites />
-          </Flex>
-          <Box width={"100%"}>
-            <News/>
-          </Box>
-        </Container>
-      </ActiveCompanyProvider>
+      <FavoritesProvider>
+        <ActiveCompanyProvider>
+          <CSSReset />
+          <Header />
+          <Container>
+            <Flex width={'100%'}>
+              <CompanyStockInfo/>
+              <Favorites />
+            </Flex>
+            <Box width={"100%"}>
+              <News/>
+            </Box>
+          </Container>
+          <Favorites />
+        </ActiveCompanyProvider>
+      </FavoritesProvider>
     </ThemeProvider>
   );
 }

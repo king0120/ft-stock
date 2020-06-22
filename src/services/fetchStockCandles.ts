@@ -1,5 +1,5 @@
 import finnHubInstance from "./finnHubClient"
-import { sixMonthsAgo, today, oneDayAgo, sixHoursAgo } from "../utils/timeUtils"
+import { today, sixHoursAgo } from "../utils/timeUtils"
 
 export default async function fetchStockCandles(symbol: string, ){
   if (!symbol) {
@@ -9,8 +9,8 @@ export default async function fetchStockCandles(symbol: string, ){
     params: {
       symbol: symbol,
       resolution: '15',
-      from: parseInt(sixHoursAgo), 
-      to: parseInt(today)
+      from: Math.floor(sixHoursAgo()), 
+      to: Math.floor(today())
     }
   }) 
   return data
