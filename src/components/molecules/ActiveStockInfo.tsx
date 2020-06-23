@@ -6,55 +6,71 @@ import {
   Text,
   Tag,
   TagLabel,
-  TagIcon,
   Box,
+  Skeleton,
 } from '@chakra-ui/core';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
-import { useRealtimePrice } from '../../services/priceWebSocket';
+import { useRealtimePrice } from '../../hooks/useRealTimePrice';
 import FavoriteIcon from '../atoms/FavoriteIcon';
-import fetchStockQuote from 'src/services/fetchStockQuote';
+import fetchStockQuote from '../../services/fetchStockQuote';
 
 const ActiveStockInfo = () => {
   const { stockName, companyInfo } = useContext(ActiveCompany);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<string>('0');
   const realTimePrices = useRealtimePrice(stockName);
+
   useEffect(() => {
     fetchStockQuote(stockName).then((data) => setPrice(data.c));
   }, [stockName]);
+
   useEffect(() => {
-    setPrice(realTimePrices[realTimePrices.length - 1]?.p.toFixed(2));
+    const mostRecentPrice = realTimePrices[realTimePrices.length - 1];
+    if (mostRecentPrice) {
+      setPrice(mostRecentPrice.p.toFixed(2));
+    }
   }, [realTimePrices]);
   return (
     <Flex alignItems="center" justifyContent="space-between">
       <Flex>
-        <Image
-          maxW={60}
-          maxH={60}
-          src={
-            companyInfo.logo ||
-            'https://fedpractice.com/content/uploads/2018/03/placeholder.png'
-          }
-          alt={`${companyInfo.name} logo`}
-        />
+        <Skeleton isLoaded={!companyInfo.loading}>
+          <Image
+            maxW={60}
+            maxH={60}
+            src={
+              companyInfo.logo ||
+              'https://fedpractice.com/content/uploads/2018/03/placeholder.png'
+            }
+            alt={`${companyInfo.name} logo`}
+          />
+        </Skeleton>
+
         <Flex direction="column">
-          <Heading as="h2" size="xl">
-            {companyInfo.name}
-          </Heading>
-          <Text>{companyInfo.ticker}</Text>
+          <Skeleton isLoaded={!companyInfo.loading}>
+            <Heading as="h2" size="xl">
+              {companyInfo.name || stockName}
+            </Heading>
+          </Skeleton>
+          <Skeleton isLoaded={!companyInfo.loading}>
+            <Text>{companyInfo.ticker || "No Info Available"}</Text>
+          </Skeleton>
         </Flex>
       </Flex>
       <Flex justifySelf="flex-end" alignSelf="flex-end" direction="column">
-        <Flex justifyContent="space-between">
-          <Text>Price: {price ? `$${price}` : 'N/A'}</Text>
-          <FavoriteIcon />
-        </Flex>
+        <Skeleton isLoaded={!companyInfo.loading}>
+          <Flex justifyContent="space-between">
+            <Text>Price: {price ? `$${price}` : 'N/A'}</Text>
+            <FavoriteIcon />
+          </Flex>
+        </Skeleton>
         <Box>
-          <Tag variantColor="green" margin="0 10px 0 0">
-            <TagLabel>{companyInfo.country}</TagLabel>
-          </Tag>
-          <Tag variantColor="teal">
-            <TagLabel>{companyInfo.finnhubIndustry}</TagLabel>
-          </Tag>
+          <Skeleton isLoaded={!companyInfo.loading}>
+            <Tag variantColor="green" margin="0 10px 0 0">
+              <TagLabel>{companyInfo.country}</TagLabel>
+            </Tag>
+            <Tag variantColor="teal">
+              <TagLabel>{companyInfo.finnhubIndustry}</TagLabel>
+            </Tag>
+          </Skeleton>
         </Box>
       </Flex>
     </Flex>

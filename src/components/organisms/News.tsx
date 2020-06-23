@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import NewsCard from '../molecules/NewsCard';
-import { Flex } from '@chakra-ui/core';
+import { Flex, Skeleton } from '@chakra-ui/core';
 import fetchCompanyNews from '../../services/fetchCompanyNews';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
 
@@ -10,21 +10,25 @@ const News = () => {
   const { stockName } = useContext(ActiveCompany);
   const [news, setNews] = useState([]);
   useEffect(() => {
+    setNews([])
     fetchCompanyNews(stockName).then(setNews);
   }, [stockName]);
   return (
     <div>
       <Flex flexWrap="wrap">
-        {news.slice(0, 20).map((newsItem: any) => {
-          return (
-            <NewsCard
-              key={newsItem.id}
-              {...newsItem}
-              imageUrl={newsItem.image || FALLBACK_IMAGE}
-              imageAlt={newsItem.headline}
-            />
-          );
-        })}
+        {!news.length
+          ? (Array(10).fill(10).map(() => <Skeleton width="200px" height="200px" margin="10px" />)) : (
+            news.slice(0, 20).map((newsItem: any) => {
+              return (
+                <NewsCard
+                  key={newsItem.id}
+                  {...newsItem}
+                  imageUrl={newsItem.image || FALLBACK_IMAGE}
+                  imageAlt={newsItem.headline}
+                />
+              );
+            })
+          )}
       </Flex>
     </div>
   );

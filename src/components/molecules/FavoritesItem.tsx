@@ -1,7 +1,7 @@
 import React, { useContext, FC, useEffect, useState } from 'react';
 import { ListItem } from '@chakra-ui/core';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
-import fetchStockQuote from 'src/services/fetchStockQuote';
+import fetchStockQuote from '../../services/fetchStockQuote';
 
 interface FavoritesItemProps {
   stockName: string;

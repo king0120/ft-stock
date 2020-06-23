@@ -8,11 +8,12 @@ import {
   LineSeries,
 } from 'react-vis';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
-import { useRealtimePrice } from '../../services/priceWebSocket';
-import { Tabs, TabList, Tab } from '@chakra-ui/core';
+import { useRealtimePrice } from '../../hooks/useRealTimePrice';
 import TimeFrameTabs from './TimeFrameTabs';
 import fetchStockCandles from '../../services/fetchStockCandles';
-import { AvailableTimes } from 'src/utils/timeUtils';
+
+import { Skeleton } from '@chakra-ui/core';
+import type { AvailableTimes } from '../../utils/timeUtils';
 
 interface PriceLineChartProps {
   width: number;
@@ -26,12 +27,16 @@ interface LineChartPoint {
 const PriceLineChart: FC<PriceLineChartProps> = React.memo(
   ({ width, height }) => {
     const [stockCandles, setStockCandles] = useState<LineChartPoint[]>([]);
-    const [selectedTime, setSelectedTime] = useState<AvailableTimes>('sixHoursAgo');
+    const [selectedTime, setSelectedTime] = useState<string>('sixHoursAgo');
     const { stockName } = useContext(ActiveCompany);
     const realtimePrice = useRealtimePrice(stockName);
 
     useEffect(() => {
-      fetchStockCandles(stockName, selectedTime).then((data) => {
+      setStockCandles([])
+      if (selectedTime === 'realTime') {
+        return
+      }
+      fetchStockCandles(stockName, selectedTime as AvailableTimes).then((data) => {
         if (!data.c) {
           return;
         }
@@ -62,19 +67,21 @@ const PriceLineChart: FC<PriceLineChartProps> = React.memo(
 
     return (
       <div className="App">
-        <TimeFrameTabs setSelectedTime={setSelectedTime}/>
-        <FlexibleXYPlot
-          xType="time"
-          margin={{ left: 50 }}
-          height={height * 0.8}
-          width={width * 0.9}
-        >
-          <XAxis />
-          <YAxis />
-          <HorizontalGridLines />
-          <VerticalGridLines />
-          <LineSeries data={stockCandles} />
-        </FlexibleXYPlot>
+        <TimeFrameTabs setSelectedTime={setSelectedTime} />
+        <Skeleton isLoaded={!!stockCandles.length}>
+          <FlexibleXYPlot
+            xType="time"
+            margin={{ left: 50 }}
+            height={height * 0.8}
+            width={width * 0.9}
+          >
+            <XAxis />
+            <YAxis />
+            <HorizontalGridLines />
+            <VerticalGridLines />
+            <LineSeries data={stockCandles} />
+          </FlexibleXYPlot>
+        </Skeleton>
       </div>
     );
   },

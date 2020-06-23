@@ -10,10 +10,11 @@ export const ActiveCompany = React.createContext({
 export const ActiveCompanyProvider: FC = ({ children }) => {
   const [stockName, setStockName] = useState('AAPL');
   const [companyInfo, setCompanyInfo] = useState<FinnhubCompanyProfile>(
-    {} as FinnhubCompanyProfile,
+    {loading: true} as FinnhubCompanyProfile,
   );
 
   useEffect(() => {
+    setCompanyInfo({loading: true} as FinnhubCompanyProfile)
     fetchCompanyInfo(stockName).then(setCompanyInfo);
   }, [stockName]);
   return (

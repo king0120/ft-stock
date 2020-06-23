@@ -10,5 +10,12 @@ interface FinnhubCompanyProfile {
   ticker: string,
   weburl: string,
   logo: string,
-  finnhubIndustry:string
+  finnhubIndustry:string,
+  loading?: boolean
+}
+
+interface FinnhubCompanySymbol {
+  description: string,
+  displaySymbol: string,
+  symbol: string
 }
