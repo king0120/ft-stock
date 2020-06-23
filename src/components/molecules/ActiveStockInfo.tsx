@@ -31,7 +31,7 @@ const ActiveStockInfo = () => {
   }, [realTimePrices]);
   return (
     <Flex alignItems="center" justifyContent="space-between">
-      <Flex>
+      <Flex alignItems='center'>
         <Skeleton isLoaded={!companyInfo.loading}>
           <Image
             maxW={60}
@@ -44,7 +44,7 @@ const ActiveStockInfo = () => {
           />
         </Skeleton>
 
-        <Flex direction="column">
+        <Flex direction="column" m="5px">
           <Skeleton isLoaded={!companyInfo.loading}>
             <Heading as="h2" size="xl">
               {companyInfo.name || stockName}
@@ -58,7 +58,7 @@ const ActiveStockInfo = () => {
       <Flex justifySelf="flex-end" alignSelf="flex-end" direction="column">
         <Skeleton isLoaded={!companyInfo.loading}>
           <Flex justifyContent="space-between">
-            <Text>Price: {price ? `$${price}` : 'N/A'}</Text>
+            <Text fontSize="lg">Current: {price ? `$${price}` : 'N/A'}</Text>
             <FavoriteIcon />
           </Flex>
         </Skeleton>

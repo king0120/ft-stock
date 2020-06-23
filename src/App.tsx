@@ -19,7 +19,7 @@ function App({}: AppProps) {
           <CSSReset />
           <Header />
           <Container>
-            <Flex width={'100%'}>
+            <Flex width={'100%'} justifyContent='space-between' direction={['column', 'column', 'row']}>
               <CompanyStockInfo />
               <Favorites />
             </Flex>

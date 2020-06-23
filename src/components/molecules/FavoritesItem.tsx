@@ -1,5 +1,5 @@
 import React, { useContext, FC, useEffect, useState } from 'react';
-import { ListItem } from '@chakra-ui/core';
+import { ListItem, Text, Divider, Flex } from '@chakra-ui/core';
 import { ActiveCompany } from '../../context/ActiveCompanyContext';
 import fetchStockQuote from '../../services/fetchStockQuote';
 
@@ -17,9 +17,11 @@ const FavoritesItem: FC<FavoritesItemProps> = ({ stockName }) => {
   }, [stockName]);
 
   return (
-    <ListItem>
-      <a onClick={() => setStockName(stockName)}>{stockName}</a>
-      {currentPrice}
+    <ListItem onClick={() => setStockName(stockName)} cursor='pointer' _hover={{borderColor: "yellow.300", bg: "yellow.300" }}>
+      <Flex justifyContent='space-between'>
+        <Text>{stockName}</Text>
+        <Text>{currentPrice}</Text>
+      </Flex>
     </ListItem>
   );
 };

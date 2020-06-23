@@ -66,7 +66,7 @@ const PriceLineChart: FC<PriceLineChartProps> = React.memo(
     }, [realtimePrice]);
 
     return (
-      <div className="App">
+      <div>
         <TimeFrameTabs setSelectedTime={setSelectedTime} />
         <Skeleton isLoaded={!!stockCandles.length}>
           <FlexibleXYPlot

@@ -2,6 +2,7 @@
 
 ## To Run Application
 Once you clone the application, simply run `yarn && yarn start` within your terminal.
+By default, the app runs on `localhost:8080`
 
 ## Notable Features
 - Connects with Finnhub API for historic and real time stock prices.

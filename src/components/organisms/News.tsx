@@ -15,7 +15,7 @@ const News = () => {
   }, [stockName]);
   return (
     <div>
-      <Flex flexWrap="wrap">
+      <Flex flexWrap="wrap" justifyContent='space-between'>
         {!news.length
           ? (Array(10).fill(10).map(() => <Skeleton width="200px" height="200px" margin="10px" />)) : (
             news.slice(0, 20).map((newsItem: any) => {

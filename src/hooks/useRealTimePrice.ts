@@ -22,7 +22,6 @@ export function useRealtimePrice(symbol: string) {
   }, []);
   useEffect(() => {
     socket.addEventListener('message', function (event: RealTimePriceEvent) {
-      console.log('Message from server ', event.data);
       const prices = JSON.parse(event?.data);
       if (
         prices.data[0].s === activeSymbol ||
