@@ -11,10 +11,10 @@ const Favorites = () => {
       <List spacing={4}>
         {favorites.length ? (
           favorites.map((fav: string, index: number) => (
-            <>
+            <React.Fragment key={fav}>
               <FavoritesItem key={fav} stockName={fav} />
               {index !== favorites.length - 1 && <Divider />}
-            </>
+            </React.Fragment>
           ))
         ) : (
           <div>No Favorites Exist</div>

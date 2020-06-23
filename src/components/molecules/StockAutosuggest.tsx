@@ -63,7 +63,6 @@ const renderSuggestionsContainer: RenderSuggestionsContainer = ({
   };
   return (
     <div {...containerProps}>
-      {/* @ts-ignore */}
       <Box {...containerStyles}>{children}</Box>
     </div>
   );

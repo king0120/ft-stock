@@ -73,7 +73,7 @@ const PriceLineChart: FC<PriceLineChartProps> = React.memo(
             xType="time"
             margin={{ left: 50 }}
             height={height * 0.8}
-            width={width * 0.9}
+            width={width}
           >
             <XAxis />
             <YAxis />

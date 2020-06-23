@@ -17,12 +17,12 @@ const News = () => {
     <div>
       <Flex flexWrap="wrap" justifyContent='space-between'>
         {!news.length
-          ? (Array(10).fill(10).map(() => <Skeleton width="200px" height="200px" margin="10px" />)) : (
+          ? (Array(10).fill(10).map((v, index) => <Skeleton key={'news-'+index} width="200px" height="200px" margin="10px" />)) : (
             news.slice(0, 20).map((newsItem: any) => {
               return (
                 <NewsCard
                   key={newsItem.id}
-                  {...newsItem}
+                {...newsItem}
                   imageUrl={newsItem.image || FALLBACK_IMAGE}
                   imageAlt={newsItem.headline}
                 />

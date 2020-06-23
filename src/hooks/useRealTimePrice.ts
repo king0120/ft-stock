@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { ActiveCompany } from '../context/ActiveCompanyContext';
 
 export interface RealTimePrice {
   p: number;
@@ -9,41 +10,34 @@ export interface RealTimePrice {
 interface RealTimePriceEvent {
   data: string;
 }
-const socket = new WebSocket('wss://ws.finnhub.io?token=brmjibvrh5re15om5k70');
+function usePrevious(value: any) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
-export function useRealtimePrice(symbol: string) {
-  const [activeSymbol, setActiveSymbol] = useState('');
+export function useRealtimePrice() {
+  const { stockName } = useContext(ActiveCompany);
+  const prev = usePrevious(stockName)
   const [realTimePrices, setRealTimePrices] = useState<RealTimePrice[]>([]);
-  useEffect(() => {
-    socket.addEventListener('open', function (event) {
-      socket.send(JSON.stringify({ type: 'subscribe', symbol: symbol }));
-      setActiveSymbol(symbol);
-    });
-  }, []);
-  useEffect(() => {
-    socket.addEventListener('message', function (event: RealTimePriceEvent) {
-      const prices = JSON.parse(event?.data);
-      if (
-        prices.data[0].s === activeSymbol ||
-        prices.data[0].s === 'BINANCE:BTCUSDT'
-      ) {
-        setRealTimePrices([...realTimePrices, ...prices.data]);
-      }
-    });
-  }, [activeSymbol]);
 
-  useEffect(() => {
-    if (socket.readyState === socket.OPEN) {
-      if (activeSymbol && activeSymbol !== symbol) {
-        socket.send(
-          JSON.stringify({ type: 'unsubscribe', symbol: activeSymbol }),
-        );
-        setRealTimePrices([]);
-      }
-      socket.send(JSON.stringify({ type: 'subscribe', symbol: symbol }));
-      setActiveSymbol(symbol);
+  const setPriceOnUpdate = useCallback((event: RealTimePriceEvent) => {
+    const prices = JSON.parse(event?.data);
+    if (prices.data[0].s === stockName) {
+      setRealTimePrices([...realTimePrices, ...prices.data]);
     }
-  }, [symbol]);
+  }, [stockName])
 
+  useEffect(() => {
+    const socket = new WebSocket('wss://ws.finnhub.io?token=brmjibvrh5re15om5k70');
+    socket.addEventListener('open', function (event) {
+      socket.send(JSON.stringify({ type: 'subscribe', symbol: stockName }));
+      socket.addEventListener('message', setPriceOnUpdate);
+    });
+    return () => socket.close()
+  }, [stockName]);
+  
   return realTimePrices;
 }
